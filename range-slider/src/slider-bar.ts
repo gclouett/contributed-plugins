@@ -49,6 +49,9 @@ export class SliderBar {
         this._slider.loop = config.loop;
         this._slider.range = config.range;
         this._slider.export = config.export;
+
+        // set units label value
+        document.getElementsByClassName('slider-units')[0].textContent = config.units;
     }
 
     /**
@@ -86,6 +89,10 @@ export class SliderBar {
         // add handles to focus cycle
         document.getElementsByClassName('noUi-handle-lower')[0].setAttribute('tabindex', '-2');
         document.getElementsByClassName('noUi-handle-upper')[0].setAttribute('tabindex', '-2');
+
+        // make sure range is set properly, there is a bug when slider is initialize without
+        // configuration from a time aware layer
+        if (this._slider.range.min === null) { this._slider.range = this.range; }
 
         // set the initial definition query
         this.setDefinitionQuery(this._slider.range);

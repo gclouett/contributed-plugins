@@ -1,4 +1,5 @@
 import {
+    DESC_BAR_TEMPLATE,
     LOCK_BAR_TEMPLATE,
     LOOP_BAR_TEMPLATE,
     PLAY_BAR_TEMPLATE,
@@ -36,7 +37,7 @@ export class SliderManager {
         this._config = config;
 
         // get array of id(s) and set layer(s)
-        const ids: string[] = this._config.layers.map(layer => layer.id);
+        let ids: string[] = this._config.layers.map(layer => layer.id);
         const layers: Layer[] = [];
         let nbLayers: number = 0;
 
@@ -53,7 +54,33 @@ export class SliderManager {
                 // if all layers are loaded, initialize slider creation
                 if (nbLayers === this._config.layers.length) {
                     this.initializeSlider(layers);
+
+                    const layersInfo = layers.map((item) => { return `${item.layer.name} (${item.layerInfo.field})` }).join(', ');
+                    document.getElementsByClassName('slider-desc-layers')[0].textContent = layersInfo;
+                    document.getElementsByClassName('slider-desc-info')[0].textContent =  this._config.description;
                 }
+            } else if (ids.length === 0) {
+                // if there is no configured layer, check if the new added layer has a time info
+                // if so, create the time slider from it
+                new Promise(resolve => {
+                    $.ajax({
+                        url: (layer.type === 'esriFeature') ? `${layer.esriLayer.url}?f=json`: `${layer.esriLayer.url}/${layer._layerIndex}?f=json`,
+                        cache: false,
+                        dataType: 'jsonp',
+                        success: data => resolve(data)
+                    });
+                }).then(data => {
+                    if (typeof (<any>data).timeInfo !== 'undefined') {
+                        const layerInfo = { id: layer.id, field: (<any>data).timeInfo.startTimeField }
+                        layers.push({ layer, layerInfo });
+                        this._config.layers = [layerInfo];
+                        this.initializeSlider(layers);
+                        document.getElementsByClassName('slider-desc-layers')[0].textContent = `${layer.name} (${layerInfo.field})`;
+
+                        // add one item to ids so a new layer will not initialize a new slider
+                        ids = ['done'];
+                    }
+                })
             }
         });
     }
@@ -163,6 +190,9 @@ export class SliderManager {
             else if (ctrl === 'delay') { templates.push(DELAY_BAR_TEMPLATE); }
             else if (ctrl === 'export') { templates.push(EXPORT_BAR_TEMPLATE); }
         }
+
+        // add the description control to show/hide info
+        templates.unshift(DESC_BAR_TEMPLATE);
 
         // create slider bar controls
         this._panel.controls = new SliderControls(this._mapApi, this._panel, templates, this._slider);
