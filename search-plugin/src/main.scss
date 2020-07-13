@@ -1,0 +1,107 @@
+// if you need to import vendor css use @import from this file instead of import from js file
+// e.g. @import '../node_modules/nouislider/distribute/nouislider.css';
+$icons-path: '~ag-grid-community/src/styles/material-icons/';
+
+// Set the colors
+$primary-color: #607d8b;
+$accent-color: #00bcd4;
+
+// Import the ag-grid styles and ag-grid material theme
+@import 'ag-grid-community/dist/styles/ag-grid';
+@import 'ag-grid-community/src/styles/ag-theme-material';
+
+
+.rv-mapnav-search-content {
+    margin: 0px!important;
+
+    &.hidden {
+      display: none !important;
+    }
+
+  }
+
+.rv-panel-content {
+
+    .md-block1{
+        padding-bottom: 22px;
+    }
+    
+    .bt1 {
+        padding: 0 6px 0 6px;
+        margin: 6px 8px 6px 8px;
+        min-width: 88px;
+        border-radius: 3px;
+        font-size: 14px;
+        text-align: center;
+        text-transform: capitalize;
+        text-decoration:none;
+        border: none;
+        outline: none;
+    }
+    .bt1:not([disabled]):hover {
+        color: white;
+    }
+    .bt2 {
+        padding: 0 6px 0 6px;
+        margin: 6px 8px 6px 8px;
+        min-width: 88px;
+        border-radius: 3px;
+        font-size: 14px;
+        text-align: center;
+        text-transform: capitalize;
+        text-decoration:none;
+        border: none;
+        outline: none;
+    }
+    .bt2:not([disabled]):hover {
+        color: white;
+    }
+}
+
+.groupX {
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 3px 15px 3px 15px;
+    color: rgb(49, 46, 46);
+    background-color: rgba(224, 224, 224, 0.96);
+    text-transform: none;
+    font-weight: 400;
+    min-width:100px;
+}
+
+.md-button.left {
+    border-radius: 10px 0 0 10px;
+}
+
+.md-button.middle {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+}
+
+.md-button.right {
+    border-radius: 0 10px 10px 0;
+}
+
+.md-button:not([disabled]):hover {
+    background-color: rgba(193, 193, 193, 0.96);
+    color: rgba(44, 65, 164, 0.96);
+    transition: 0.3s;
+}
+
+#myGrid {
+    flex: 1 1 auto;
+    width: 100%;
+    right: 52px
+    
+}
+
+.example-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    right: 52px;
+}
+
+
+
