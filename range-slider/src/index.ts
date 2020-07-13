@@ -18,18 +18,24 @@ export default class RangeSlider {
         this.panel.body = SLIDER_TEMPLATE;
 
         // get slider configuration then add/merge needed configuration
-        const config = this._RV.getConfig('plugins').rangeSlider; 
-        const extendConfig = { ...RangeSlider.prototype.layerOptions, ...config.params };
-        extendConfig.controls = config.controls;
-        extendConfig.layers = config.layers;
-        extendConfig.open = config.open;
+        const config = this._RV.getConfig('plugins').rangeSlider;
+
+        let extendConfig: any = {}
+        if (typeof config !== 'undefined') {
+            extendConfig = { ...RangeSlider.prototype.layerOptions, ...config.params };
+            extendConfig.controls = config.controls;
+            extendConfig.layers = config.layers;
+            extendConfig.open = config.open;
+        } else {
+            extendConfig = RangeSlider.prototype.layerOptions;
+        }
         extendConfig.language = this._RV.getCurrentLang();
 
         // side menu button
         this._button = this.mapApi.mapI.addPluginButton(
             RangeSlider.prototype.translations[this._RV.getCurrentLang()].title, this.onMenuItemClick()
         );
-        if (config.open) { this._button.isActive = true; }
+        if (extendConfig.open) { this._button.isActive = true; }
 
         // start slider creation
         new SliderManager(mapApi, this.panel, extendConfig);
@@ -63,14 +69,14 @@ export interface Range {
 }
 
 RangeSlider.prototype.panelOptions = {
-    top: 'calc(100% - 165px)',
-    height: '110px',
+    top: 'calc(100% - 235px)',
+    height: '185px',
     'margin-right': '60px',
     'margin-left': '420px'
 };
 
 RangeSlider.prototype.layerOptions = {
-    open: false,
+    open: true,
     precision: 2,
     delay: 3000,
     lock: false,
@@ -78,14 +84,17 @@ RangeSlider.prototype.layerOptions = {
     export: false,
     range: { min: null, max: null },
     limit: { min: null, max: null },
+    type: 'date',
     layers: [],
-    controls: []
+    controls: ['lock', 'loop', 'delay', 'refresh']
 };
 
 RangeSlider.prototype.translations = {
     'en-CA': {
         title: 'Range Slider',
         bar: {
+            show: 'Show slider information',
+            hide: 'Hide slider information',
             lock: 'Lock left anchor',
             unlock: 'Unlock left anchor',
             loop: 'Animate in loop',
@@ -106,9 +115,11 @@ RangeSlider.prototype.translations = {
     'fr-CA': {
         title: 'Curseur de plage',
         bar: {
+            show: 'Afficher l\'information du curseur de plage',
+            hide: 'Cacher l\'information du curseur de plage',
             lock: 'Verrouiller la molette gauche',
             unlock: 'Déverrouiller la molette gauche',
-            loop: 'animer en boucle',
+            loop: 'Animer en boucle',
             unloop: 'Ne pas animer en boucle',
             previous: 'Précédent',
             play: 'Jouer',

@@ -14,9 +14,9 @@
       },
       "legend": {
         "isOpen": {
-          "large": false,
-          "medium": false,
-          "small": false
+          "large": true,
+          "medium": true,
+          "small": true
         },
         "reorderable": false
       }
@@ -82,66 +82,21 @@
         }
       },
       "legend": {
-        "type": "autopopulate",
+        "type": "structured",
         "root": {
           "name": "root",
-          "children": [
-          ]
+          "children": [{
+            "infoType": "text",
+            "content": "Feature Layer url: https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/ks_earthquakes_since_2000/FeatureServer/0",
+            "export": "false"
+          }, {
+            "infoType": "text",
+            "content": "Dynamic Layer url: https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/ks_earthquakes_since_2000/FeatureServer/",
+            "export": "false"
+          }]
         }
       },
-      "layers": [
-        {
-          "id": "powerplant100mw-naturalGas",
-          "name": "Natural Gas Pipeline",
-          "layerType": "esriFeature",
-          "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/NACEI/energy_infrastructure_of_north_america_en/MapServer/2"
-        },
-        {
-          "layerType": "ogcWms",
-          "colour": "#ff0000",
-          "toggleSymbology": true,
-          "refreshInterval": 0,
-          "expectedResponseTime": 4000,
-          "tolerance": 5,
-          "imageFormat": "png32",
-          "singleEntryCollapse": false,
-          "suppressGetCapabilities": false,
-          "state": {
-              "opacity": 1,
-              "visibility": true,
-              "boundingBox": false,
-              "query": true,
-              "snapshot": false,
-              "hovertips": true
-          },
-          "layerEntries": [
-              {
-                  "outfields": "*",
-                  "stateOnly": false,
-                  "state": {
-                      "opacity": 1,
-                      "visibility": true,
-                      "boundingBox": false,
-                      "query": true,
-                      "snapshot": false,
-                      "hovertips": true
-                  },
-                  "allStyles": [
-                      "default"
-                  ],
-                  "init": true,
-                  "id": "0",
-                  "name": "Sample",
-                  "currentStyle": "default"
-              }
-          ],
-          "name": "wms",
-          "id": "wms",
-          "url": "https://webservices.maps.canada.ca/arcgis/services/ELECTIONS/federal_electoral_districts_boundaries_2013_fr/MapServer/WMSServer",
-          "featureInfoMimeType": "text/html",
-          "legendMimeType": "image/png"
-      }
-      ],
+      "layers": [],
       "extentSets": [
         {
           "id": "EXT_NRCAN_Lambert_3978",
@@ -293,21 +248,5 @@
         }
       ]
     },
-    "plugins": {
-      "rangeSlider": {
-        "open": true,
-        "controls": ["lock", "loop", "delay", "refresh", "export"],
-        "params": {
-          "delay": 3000,
-          "range": { "min": 90, "max": 100 },
-          "limit": { "min": 0, "max": 400 },
-          "type": "number",
-          "units": ""
-        },
-        "layers": [{
-            "id": "wms",
-            "field": "OBJECTID"
-        }]
-      }
-    }
+    "plugins": {}
   }
