@@ -1,4 +1,4 @@
-import { PLAN_PANEL_TEMPLATE, TAB_TEMPLATE } from './template';
+import { SEARCH_PANEL_TEMPLATE, TAB_TEMPLATE, PROVINCE } from './template';
 import { MakeQuery } from './layer-query';
 
 const Draggabilly = require('draggabilly');
@@ -6,47 +6,11 @@ const Draggabilly = require('draggabilly');
 const PANEL_OPTIONS_CSS = {
     top: '50%',
     left: '50%',
-    width: '800px',
+    width: '400px',
     height: '360px',
     marginLeft: '-250px',
     marginTop: '-180px'
 };
-
-const provEngFra = {
-    'fr-CA' :[
-        'Canada',
-        'Alberta',
-        'Colombie-Britannique',
-        'Île-du-Prince-Édouard',
-        'Manitoba',
-        'Nouveau-Brunswick',
-        'Nouvelle-Écosse',
-        'Nunavut',
-        'Ontario',
-        'Québec',
-        'Saskatchewan',
-        'Terre-Neuve-et-Labrador',
-        'Territoire du Nord-Ouest',
-        'Yukon'
-    ],
-    'en-CA': [
-        'Canada',
-        'Alberta',
-        'British-Colombia',
-        'Prince Edward Island',
-        'Manitoba',
-        'New Brunswick',
-        'Nova Scotia',
-        'Nunavut',
-        'Ontario',
-        'Quebec',
-        'Saskatchewan',
-        'Newfoundland and Labrador',
-        'Northwest Territories',
-        'Yukon'
-    ]
-} 
-
 
 export class PlanPanel {
 
@@ -55,13 +19,14 @@ export class PlanPanel {
     private planInput: any;
     private controls: any;
     public planPanel: any;
-  
+    private inputBox2: any;
+    
     constructor (mapApi: any, configLang: any) {
         this.mapApi = mapApi;
         this.configLang = configLang
+        this.inputBox2 = <HTMLInputElement>document.getElementById("planInput");
     }
 
-    //show (mapApi) {
     show(mapApi = this.mapApi, configLang=this.configLang) {
 
         const planPanel = this.mapApi.panels.create('searchPlanPanel');
@@ -84,33 +49,37 @@ export class PlanPanel {
 
         const that = this;
         this.planPanel = planPanel
+
+        //this.inputBox = <HTMLInputElement>document.getElementById("planInput");
+
   
         this.mapApi.agControllerRegister('SearchPanel', ['$scope','$http', function($scope, $http) {
-
-            let b = that.configLang;
         
             $scope.searchFunction = function() {
-                let a = new MakeQuery(mapApi, b, "planInput")
+
+                let inputBox = <HTMLInputElement>document.getElementById("planInput");
+                if (inputBox.checkValidity()) {
+                    let query = new MakeQuery(mapApi, configLang);
+                } else {
+                    inputBox.style.borderColor = 'red'
+                }
             }
 
             $scope.resetFunction = function() {
-                
+
                 let inputBox = <HTMLInputElement>document.getElementById("planInput");
                 inputBox.value = ''
-                
-                let queryTable1 = <HTMLTableElement>document.getElementById("queryPlanResult");
-                let queryTable2 =  <HTMLElement>document.getElementById("tableLoaderId");
+                inputBox.style.borderColor = ''
 
-                if (queryTable2) {
-                    queryTable2.remove()
-                }
+                let resultsGrid =  <HTMLElement>document.getElementById("tableLoaderId");
 
-                while (queryTable1.rows.length > 0) {
-                    queryTable1.deleteRow(0);
+                if (resultsGrid) {
+                    resultsGrid.remove()
                 }
             }
 
-            $scope.states = provEngFra[b].map(function(state) {
+
+            $scope.states = Object.keys(PROVINCE[configLang]).map(function(state) {
                 return {abbrev:state}
             })
 
@@ -133,9 +102,8 @@ export class PlanPanel {
             };
 
         }])*/
-
   
-        let panelTemplate = $(PLAN_PANEL_TEMPLATE);
+        let panelTemplate = $(SEARCH_PANEL_TEMPLATE);
         this.mapApi.$compile(panelTemplate);
         planPanel.body.empty();
         planPanel.body.prepend(panelTemplate);
@@ -154,7 +122,6 @@ export class PlanPanel {
         $('rv-mapnav .rv-mapnav-content').prepend(toolBarButton);
 
     }
-
 
     closePanel() {
         this.planPanel.close()

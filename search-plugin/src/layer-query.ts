@@ -1,93 +1,31 @@
 import { TableLoader } from './table-loader';
-import { PRINT_TABLE_NOT_ROWS } from './table-template';
+//import { PRINT_TABLE_NOT_ROWS } from './table-template';
 import { TableManager } from './table-manager';
 import { ConfigManager, ColumnConfigManager} from './config-manager';
+import { PROVINCE } from './template';
 
-const provEngFra = {
-    'fr-CA' :{
-        'Canada': 'CA',
-        'Alberta': 'AB',
-        'Colombie-Britannique': 'BC',
-        'Île-du-Prince-Édouard': 'PE',
-        'Manitoba': 'MB',
-        'Nouveau-Brunswick': 'NB',
-        'Nouvelle-Écosse': 'NS',
-        'Nunavut': 'NT',
-        'Ontario': 'ON',
-        'Québec': 'QC',
-        'Saskatchewan': 'SK',
-        'Terre-Neuve-et-Labrador': 'NL',
-        'Territoire du Nord-Ouest': 'NT',
-        'Yukon': 'YT'
-    },
-    'en-CA': {
-        'Canada': 'CA',
-        'Alberta': 'AB',
-        'British-Colombia': 'BC',
-        'Prince Edward Island': 'PE',
-        'Manitoba': 'MB',
-        'New Brunswick': 'NB',
-        'Nova Scotia': 'NS',
-        'Nunavut': 'NT',
-        'Ontario': 'ON',
-        'Quebec': 'QC',
-        'Saskatchewan': 'SK',
-        'Newfoundland and Labrador': 'NL',
-        'Northwest Territories': 'NT',
-        'Yukon': 'YT'
-    }    
-} 
 
 export class MakeQuery {
     private _mapApi: any;
     private _configLang: any;
-    private _bundle: any;
 
     private query: any;
-    private baseURL: any;
+    //private baseURL: any;
     private curProv: any;
     private queryURL: any;
     private queryTask: any;
     private whereclause: any;
     private loadingPanel: any;
 
-    constructor(mapApi: any, configLang: any, input: any) {
+    private baseURL: string = "http://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/";
+
+
+    constructor(mapApi: any, configLang: any) {
         this._mapApi = mapApi;
         this._configLang = configLang;
 
-        // add needed dependencies
-        let myBundlePromise = (<any>window).RAMP.GAPI.esriLoadApiClasses([
-            ['esri/tasks/query', 'Query'],
-            ["esri/tasks/QueryTask", "QueryTask"]
-        ]);
+        this.openLoadingPanel(mapApi)
 
-        myBundlePromise.then(myBundle => {
-            this.openLoadingPanel(mapApi, myBundle, 0, input)
-            //this.executeQueryAB(myBundle, 0, input, mapApi);
-        });
-
-        return this;
-    }
-
-    executeQueryAB(myBundle, layerno, input, mapApi) {
-
-        this._bundle = myBundle;
-        this.query = new this._bundle.Query();
-        this.baseURL = "http://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/";
-        this.curProv = 'AB';
-        this.queryURL = this.baseURL + "WMB_Query_" + this.curProv + "/MapServer/" + layerno;
-        this.queryTask = new this._bundle.QueryTask(this.queryURL)
-
-        let htmlInputBox = <HTMLInputElement>document.getElementById(input)
-
-        if (htmlInputBox && htmlInputBox.value != "") {
-            this.whereclause = "planno like '%" + htmlInputBox.value.toUpperCase().replace("'", "''") + "%'";
-        }
-    
-        this.query.where = this.whereclause;
-        this.query.returnGeometry = false;
-        this.query.outFields = ["PLANNO", "P2_DESCRIPTION", "GlobalID", "PROVINCE", "P3_DATESURVEYED", "SURVEYOR", "ALTERNATEPLANNO"];
-        //this.queryTask.execute(this.query, this.updatePlanTable)
     }
 
     getProvinceAbrev() {
@@ -97,22 +35,40 @@ export class MakeQuery {
 
         if (selectProvinceText === 'Province') {
             return 'CA';
-
         } else {
-            return provEngFra[this._configLang][selectProvinceText];
+            return PROVINCE[this._configLang][selectProvinceText];
         }
     }
 
-    executeQuery(myBundle, layerno, input, mapApi) {
+    openLoadingPanel(mapApi) {
 
-        this._bundle = myBundle;
-        this.query = new this._bundle.Query();
-        this.baseURL = "http://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/";
-        this.curProv = this.getProvinceAbrev() //'AB';
-        this.queryURL = this.baseURL + "WMB_Query_" + this.curProv + "/MapServer/" + layerno;
-        this.queryTask = new this._bundle.QueryTask(this.queryURL)
+        let legendBlock = {
+            name: "Survey Plan Results",
+            loadingPanel: {},
+            formattedData:''
+        }
 
-        let htmlInputBox = <HTMLInputElement>document.getElementById(input)
+        this.loadingPanel = new TableLoader(mapApi, legendBlock);
+
+        /*let loadingTimeout = setTimeout(() => {
+            legendBlock.loadingPanel = this.loadingPanel;
+            legendBlock.formattedData;
+        }, 200);*/
+
+        let restLayerNumber = 0
+        let planInputID = "planInput"
+        this.executeQuery(restLayerNumber, planInputID);
+
+    }; 
+
+    executeQuery(layerNumber, inputBoxID) {
+
+        this.query = new (<any>window).RAMP.GAPI.esriBundle.Query();
+        this.curProv = this.getProvinceAbrev();
+        this.queryURL = this.baseURL + "WMB_Query_" + this.curProv + "/MapServer/" + layerNumber;
+        this.queryTask = new (<any>window).RAMP.GAPI.esriBundle.QueryTask(this.queryURL)
+
+        let htmlInputBox = <HTMLInputElement>document.getElementById(inputBoxID)
 
         if (htmlInputBox && htmlInputBox.value != "") {
             this.whereclause = "planno like '%" + htmlInputBox.value.toUpperCase().replace("'", "''") + "%'";
@@ -124,37 +80,13 @@ export class MakeQuery {
         this.queryTask.execute(this.query, this.createTable(this.loadingPanel))
     }
 
-    openLoadingPanel(mapApi, myBundle, layerno, input) {
-
-        let legendBlock = {
-            name: "Survey Plan Results",
-            loadingPanel: {},
-            formattedData:''
-        }
-
-        this.loadingPanel = new TableLoader(mapApi, legendBlock);
-
-        let loadingTimeout = setTimeout(() => {
-            legendBlock.loadingPanel = this.loadingPanel;
-            legendBlock.formattedData;
-        }, 200);
-
-
-        this.executeQuery(myBundle, layerno, input, mapApi);
-
-    }; 
-
     createTable(panel) {
         return function(queryResults) {  
-            let a = queryResults.features
+            const columns = ['Plan Number', 'Description', 'Date of Survey','Plan Detail', 'LTO']
 
+            /*
             const self = this;
-            let cols: Array<any> = [];
-            //const layerProxy = attrBundle.layer._layerProxy;
-            
             let headers = ``;
-            const columnNames = ['Plan Number', 'Description', 'Date of Survey','Plan Detail', 'LTO']
-
             const columns = ['Plan Number', 'Description', 'Date of Survey','Plan Detail', 'LTO']
 
             columns.forEach(columnName => {
@@ -198,14 +130,15 @@ export class MakeQuery {
                     headers += `<th style='width:200%; padding: 5px; border-bottom: 2px solid #000000'><div class='cell'>${columnName}</div></th>`;
                 };
                 
-            });
+            });*/
 
+            let a = queryResults.features
             panel.changePanel('TEST', columns, a);
         }
 
     }
 
-    openLoading(mapApi, panel) {
+    /*openLoading(mapApi, panel) {
         return function(queryResults) {  
             let a = queryResults.features
 
@@ -219,7 +152,6 @@ export class MakeQuery {
             
             //let loadingPanel = new TableLoader(mapApi, legendBlock);
             //panel.changeBody(legendBlock);
-            
 
             let loadingTimeout = setTimeout(() => {
                 legendBlock.loadingPanel = panel;
@@ -227,52 +159,7 @@ export class MakeQuery {
             }, 200);
 
         }; 
-    }; 
-
-    updatePlanTable(featureSet) { 
-
-        let queryArray = []
-        let basePlanURL = "plan-fra.php?id=";
-
-        featureSet.features.forEach(function(result) {
-            queryArray.push(result.attributes);
-        })
-        //return queryArray
-
-        let features = featureSet.features;
-        let queryTable = <HTMLTableElement>document.getElementById("queryPlanResult");
-        let curRow;
-
-        while (queryTable.rows.length > 0) {
-            queryTable.deleteRow(0);
-        }
-        
-        for (let i = 0; i < features.length; i++) {
-            let curfeature = features[i];
-            let curatts = curfeature.attributes;
-      
-            curRow = queryTable.insertRow(-1);
-            let planNoCell = curRow.insertCell(0);
-            let titleCell = curRow.insertCell(1);
-            let dateSurveyedCell = curRow.insertCell(2);
-            let planDetailCell = curRow.insertCell(3);
-            let ltoCell = curRow.insertCell(4);
-      
-            planNoCell.innerHTML = "<a title='Click to zoom to " + curatts["PLANNO"] + "' href=javascript:zoomFeature('" + curatts["GlobalID"] + "','" + escape(curatts["PROVINCE"]) + "'); onmouseover=javascript:highlightFeature('" + curatts["GlobalID"] + "') onmouseout=javascript:map.graphics.clear() onfocus=javascript:highlightFeature('" + curatts["GlobalID"] + "') onblur=javascript:map.graphics.clear()>" + curatts["PLANNO"] + "</a>";
-            planNoCell.className = "nowrap";
-            titleCell.innerHTML = curatts["P2_DESCRIPTION"];
-            titleCell.title = curatts["P2_DESCRIPTION"];
-            dateSurveyedCell.innerHTML = curatts["P3_DATESURVEYED"];
-            dateSurveyedCell.title = curatts["P3_DATESURVEYED"];
-            dateSurveyedCell.className = "nowrap";
-            planDetailCell.innerHTML = "<a href='" + basePlanURL + curatts["PLANNO"] + "' target=_blank>Visualiser<span class='wb-invisible'> " + curatts["PLANNO"] + "</span></a>";
-            planDetailCell.className = "nowrap";
-            ltoCell.innerHTML = curatts["ALTERNATEPLANNO"];
-            ltoCell.className = "nowrap";
-        
-        }
-        return featureSet;
-    }
+    }; */
 }
 
 export interface MakeQuery {

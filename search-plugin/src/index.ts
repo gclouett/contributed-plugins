@@ -1,33 +1,15 @@
-// how to add an html element from template.ts to your application
-import { SAMPLE_BUTTON, SAMPLE_INPUT_TEXT, SAMPLE_FORM, TABLE_TEMPLATE } from './template';
-
-
 import { AddLayer } from './add-layer';
 import { MakeQuery } from './layer-query';
 import { PlanPanel } from './panel-manager';
 import { TableManager } from './table-manager';
 
-const os = require('os');
-let totalMemory = os.totalmem();
-console.log(totalMemory);
-
 const logger = require('./logger');
-logger('message');
+logger('Loading plugin...');
 
 export default class SearchPlugin {
 
-    private _panelForm: any;
-    private _panelTable: any;
     private _button: any;
     private panel: any;
-    private _panelOptionsForm: object = { bottom: '100px', top: '450px', left: '350px', width: '550px', height: '400px'};
-    private _panelOptions: object = {
-        'margin-top': '60px',
-        'margin-bottom': '60px',
-        'margin-right': '60px',
-        'margin-left': '420px'
-    };
-
     
     /**
     * Plugin init
@@ -64,20 +46,6 @@ export default class SearchPlugin {
 
         //Add layer to page
         this.addLayer(this.mapApi)
-
-        // how to create a panel, title, close, open
-        this._panelForm = this.mapApi.panels.create('PlanPanel');
-        this._panelForm.element.css(this._panelOptionsForm);
-        this._panelForm.header.title = SearchPlugin.prototype.translations[this._RV.getCurrentLang()].placeHolder;
-        this._panelForm.header.closeButton
-        //this._panelForm.open();
-
-        // create a controller with agControllerRegister
-        //this.setAngular(this.mapApi);
-        this._panelForm.body = SAMPLE_FORM
-
-        // if body is set and you want to append, compile the code first
-        //this._panelForm.body.append(this.compileTemplate(SAMPLE_BUTTON));
         
         this.panel = new PlanPanel(mapApi, this.config.language);
         this.panel.show()
@@ -100,33 +68,11 @@ export default class SearchPlugin {
         };
     }
 
-    setAngular(mapApi) {
-        // to reference this inside the function
-        const that = this;
-        
-        this.mapApi.agControllerRegister('SampleCtrl1', function () {
-
-            // access to ng-click
-            this.sampleFunction = () => {
-                this.valuetestA = (<HTMLInputElement>document.getElementById("myInput")).value
-                console.log(this.valuetestA);
-                let a = new MakeQuery(mapApi, this.config, "myInput")
-                alert(this.valuetestA)
-            };
-            this.sampleFunctions = () => {
-                this.valuetestB = (<HTMLInputElement>document.getElementById("myInput2")).value
-                let a = new MakeQuery(mapApi, this.config, "myInput2")
-
-            };
-        });
-    }
-
-
-    compileTemplate(template: string): JQuery<HTMLElement> {
+    /*compileTemplate(template: string): JQuery<HTMLElement> {
         let temp = $(template);
         this.mapApi.$compile(temp);
         return temp;
-    }
+    }*/
 }
 
 export default interface SearchPlugin {
@@ -135,7 +81,6 @@ export default interface SearchPlugin {
     config: any,
     translations: any,
     tableManager: TableManager;
-
 }
 
 SearchPlugin.prototype.translations = {
@@ -153,7 +98,6 @@ SearchPlugin.prototype.translations = {
         surveyDateTitle: 'Date of Survey',
         planDetailTitle: 'Plan Detail',
         bedfTitle: 'LTO'
-
     },
     'fr-CA': {
         placeHolder: 'Recherche de plans test',

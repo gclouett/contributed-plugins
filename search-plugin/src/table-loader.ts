@@ -1,4 +1,5 @@
-import { TABLE_LOADING_TEMPLATE, TABLE_LOADING_TEMPLATE2, PRINT_TABLE_NOT_ROWS,CUSTOM_HEADER } from './table-template';
+import { TABLE_LOADING_TEMPLATE2, CUSTOM_HEADER } from './table-template';
+import { GRID_TEMPLATE } from './template';
 import { Grid } from 'ag-grid-community';
 
 
@@ -53,19 +54,19 @@ export class TableLoader {
         //let template = TABLE_LOADING_TEMPLATE(legendBlock);
 
         this.panel.header.title = headers
-        //this.panel.body =  PRINT_TABLE_NOT_ROWS(headers, cols);
+        //this.panel.body =  GRID_TEMPLATE(headers, cols);
 
         this.makeTable(rows)
     }
 
     makeTable(rows) {
         
-        //this.panel.body.prepend(this.compileTemplate(PRINT_TABLE_NOT_ROWS))
-        this.panel.body = this.compileTemplate(PRINT_TABLE_NOT_ROWS)
+        //this.panel.body.prepend(this.compileTemplate(GRID_TEMPLATE))
+        this.panel.body = this.compileTemplate(GRID_TEMPLATE)
   
 
 
-        let gridDiv = <HTMLElement>document.querySelector('#myGrid')
+        let gridDiv = <HTMLElement>document.querySelector('#resultsGrid')
 
         let gridOptions = {
             columnDefs: [
