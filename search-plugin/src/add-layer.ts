@@ -41,7 +41,7 @@ export class AddLayer {
         this.layer = new RAMP_GAPI.FeatureLayer(LAYER_URL, {
           mode: RAMP_GAPI.FeatureLayer.MODE_SNAPSHOT,
           id:"1",
-          name:"AB-layer5",
+          name:"AB-layer5", 
           opacity: 0.8,
           outFields: ["ADMINAREAID", "ENGLISHNAME", "PROVINCE"],
           //definitionExpression: "AREA > 0.1",
