@@ -1,7 +1,6 @@
 export class AddLayer {
     
     public translations: any;
-    
     private mapApi: any;
     private config: any;
     private esriBundle: any;
@@ -14,15 +13,9 @@ export class AddLayer {
         this.mapApi = mapApi;
         this.config = config;
     
-    
         // Load ArcGIS JS API requirements
         let esriBundlePromise = (<any>window).RAMP.GAPI.esriLoadApiClasses([
-            ['esri/layers/FeatureLayer', 'FeatureLayer'],
             ['esri/dijit/PopupTemplate', 'PopupTemplate'],
-            ["esri/renderers/SimpleRenderer", "SimpleRenderer"],
-            ['esri/symbols/SimpleFillSymbol', 'SimpleFillSymbol'],
-            ["esri/symbols/SimpleLineSymbol", 'SimpleLineSymbol'],
-            ["esri/Color", 'Color'],
             ["dijit/TooltipDialog", "TooltipDialog"],
             ["dijit/popup", "dijitPopup"], 
             ["dojo/domReady!"],
@@ -36,16 +29,17 @@ export class AddLayer {
 
         esriBundlePromise.then(esriBundle => {
             that.addLayer(esriBundle, mapApi, config);
-            this.esriBundle = esriBundle;
-            //this.addSymbology(esriBundle)
-           
         });
     }
 
     addLayer(esriBundle, mapApi, config) {
+        const RAMP_GAPI =  (<any>window).RAMP.GAPI.esriBundle
+        const LAYER_URL = 'https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/WMB_Query_AB/MapServer/3'
+
         this._bundle  = esriBundle;
-        this.layer = new esriBundle.FeatureLayer('https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/WMB_Query_AB/MapServer/3', {
-          mode: esriBundle.FeatureLayer.MODE_SNAPSHOT,
+
+        this.layer = new RAMP_GAPI.FeatureLayer(LAYER_URL, {
+          mode: RAMP_GAPI.FeatureLayer.MODE_SNAPSHOT,
           id:"1",
           name:"AB-layer5",
           opacity: 0.8,
@@ -71,28 +65,22 @@ export class AddLayer {
                 visible: true,
                 format:1
               }
-
-            //  //  fieldName: rendererField,
-            //    label: "Average Farm Expenses",
-            //    visible: true,
-            //  //  format: {places: 0}
             ]
           })
         });
-      
 
         //Symbology for the layer
-        let symbol = new esriBundle.SimpleFillSymbol(
-          esriBundle.SimpleFillSymbol.STYLE_SOLID,
-          new esriBundle.SimpleLineSymbol(
-            esriBundle.SimpleLineSymbol.STYLE_SOLID,
-            new esriBundle.Color([255,255,255,0.35]),  //White
+        let symbol = new RAMP_GAPI.SimpleFillSymbol(
+          RAMP_GAPI.SimpleFillSymbol.STYLE_SOLID, 
+          new RAMP_GAPI.SimpleLineSymbol( 
+            RAMP_GAPI.SimpleLineSymbol.STYLE_SOLID,
+            new RAMP_GAPI.Color([255,255,255,0.35]),  //White
             1
           ),
-          new esriBundle.Color([125,125,125,0.35])    //Grey
+          new RAMP_GAPI.Color([125,125,125,0.35])     //Grey
         );
 
-        this.layer.setRenderer(new esriBundle.SimpleRenderer(symbol));
+        this.layer.setRenderer(new RAMP_GAPI.SimpleRenderer(symbol))
 
         // Add layer to map from rest server
         this.mapApi.esriMap.addLayer(this.layer);
@@ -105,13 +93,13 @@ export class AddLayer {
         dialog.startup();
 
         // Symbology when mouse over (red contour with grey background)
-        let highlightSymbol = new esriBundle.SimpleFillSymbol(
-          esriBundle.SimpleFillSymbol.STYLE_SOLID,
-          new esriBundle.SimpleLineSymbol(
-            esriBundle.SimpleLineSymbol.STYLE_SOLID,
-            new esriBundle.Color([255,0,0]), 3         //Red
+        let highlightSymbol = new RAMP_GAPI.SimpleFillSymbol(
+          RAMP_GAPI.SimpleFillSymbol.STYLE_SOLID,
+          new RAMP_GAPI.SimpleLineSymbol(
+            RAMP_GAPI.SimpleLineSymbol.STYLE_SOLID,
+            new RAMP_GAPI.Color([255,0,0]), 3          //Red
           ),
-          new esriBundle.Color([125,125,125,0.35])     //Grey
+          new RAMP_GAPI.Color([125,125,125,0.35])      //Grey
         );
         
         // When mouse over polygon -> start mouse event
@@ -126,7 +114,7 @@ export class AddLayer {
         })
 
         let newDiv = esriBundle.domConstruct.create("div")
-        // 
+
         this.layer.on("mouse-over", function(evt){
           let t = "<b>${ADMINAREAID}</b><hr><b>Name: </b>${ENGLISHNAME:StringFormat}<br>";
 
@@ -142,14 +130,8 @@ export class AddLayer {
             x: evt.pageX,
             y: evt.pageY,
           });
-
-          //let parentTest = document.getElementById('mapSearchPlugin')
-          //let childTest = document.getElementById('tooltipDialog')
-          //parentTest.insertAdjacentElement("beforeend", childTest)
         });
-
     }
-
 }
 
 // Add translation (Just a copy from another files)
