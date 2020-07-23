@@ -9,12 +9,8 @@ export class TableLoader {
         this.mapApi = mapApi;
         this.legendBlock = legendBlock;
         this.panel = this.mapApi.panels.create('tableLoaderId');
-        this.panel.element.css({
-            top: '50%',
-            left: '410px',
-            right: '52px',
+        this.panel.element.css({top: '50%', left: '410px', right: '52px',});
 
-        });
         this.panel.header.toggleButton
         const customBtn = new this.panel.Button('Custom Btn')
         this.panel.header.append(customBtn);
@@ -51,11 +47,7 @@ export class TableLoader {
     }
 
     changePanel(headers, cols, rows) {
-        //let template = TABLE_LOADING_TEMPLATE(legendBlock);
-
         this.panel.header.title = headers
-        //this.panel.body =  GRID_TEMPLATE(headers, cols);
-
         this.makeTable(rows)
     }
 
@@ -64,8 +56,6 @@ export class TableLoader {
         //this.panel.body.prepend(this.compileTemplate(GRID_TEMPLATE))
         this.panel.body = this.compileTemplate(GRID_TEMPLATE)
   
-
-
         let gridDiv = <HTMLElement>document.querySelector('#resultsGrid')
 
         let gridOptions = {
@@ -91,10 +81,6 @@ export class TableLoader {
             },*/
             pagination: true,
             enableColResize: true,
-                      
-
-
-
         }
 
         rows.forEach(function(result) {
@@ -113,12 +99,8 @@ export class TableLoader {
                 lto: result.attributes['ALTERNATEPLANNO']
             })
         })
-
-
         
-        //this.panel.body.prepend(this.compileTemplate(CUSTOM_HEADER))
         new Grid(gridDiv, gridOptions);
-
     }
 
     compileTemplate(template): JQuery<HTMLElement> {

@@ -1,7 +1,5 @@
 import { AddLayer } from './add-layer';
-import { MakeQuery } from './layer-query';
 import { PlanPanel } from './panel-manager';
-import { TableManager } from './table-manager';
 
 const logger = require('./logger');
 logger('Loading plugin...');
@@ -45,7 +43,7 @@ export default class SearchPlugin {
         this._button.isActive = true;
 
         //Add layer to page
-        this.addLayer(this.mapApi)
+        let testLayer = new AddLayer(mapApi, this.config);
         
         this.panel = new PlanPanel(mapApi, this.config.language);
         this.panel.show()
@@ -53,11 +51,6 @@ export default class SearchPlugin {
         //this.panel.panel.closing.subscribe(this.onHideResultPanel.bind(this));
 
     }
-
-    addLayer(mapApi) {
-        let testLayer = new AddLayer(mapApi, this.config);
-    }
-
     
     //When the plugin button is clicked (left menu)
     onMenuItemClick() {
@@ -80,7 +73,6 @@ export default interface SearchPlugin {
     _RV: any,
     config: any,
     translations: any,
-    tableManager: TableManager;
 }
 
 SearchPlugin.prototype.translations = {

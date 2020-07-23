@@ -16,15 +16,11 @@ export class PlanPanel {
 
     private mapApi: any;
     private configLang: any;
-    private planInput: any;
-    private controls: any;
     public planPanel: any;
-    private inputBox2: any;
     
     constructor (mapApi: any, configLang: any) {
         this.mapApi = mapApi;
         this.configLang = configLang
-        this.inputBox2 = <HTMLInputElement>document.getElementById("planInput");
     }
 
     show(mapApi = this.mapApi, configLang=this.configLang) {
@@ -50,9 +46,6 @@ export class PlanPanel {
         const that = this;
         this.planPanel = planPanel
 
-        //this.inputBox = <HTMLInputElement>document.getElementById("planInput");
-
-  
         this.mapApi.agControllerRegister('SearchPanel', ['$scope','$http', function($scope, $http) {
         
             $scope.searchFunction = function() {
@@ -83,36 +76,16 @@ export class PlanPanel {
                 return {abbrev:state}
             })
 
-            //this.mapApi.layers.reload.subscribe((baseLayer: any, interval: boolean) => 
-
         }]);
-
-        /*this.mapApi.agControllerRegister('AppCtrl', ['$scope', function($scope) {
-            $scope.data = {
-                selectedIndex: 0,
-                secondLocked:  true,
-                secondLabel:   "Item Two",
-                bottom:        false
-            };
-            $scope.next = function() {
-                $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
-            };
-            $scope.previous = function() {
-                $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
-            };
-
-        }])*/
   
         let panelTemplate = $(SEARCH_PANEL_TEMPLATE);
         this.mapApi.$compile(panelTemplate);
         planPanel.body.empty();
         planPanel.body.prepend(panelTemplate);
         planPanel.open();
-  
     }
 
     setIconBar() {
-
         this.mapApi.agControllerRegister('DownloadBtnCtrl', ['$scope', function($scope) {
             $scope.downloadResultsAsJson = 'test';
         }])
@@ -120,14 +93,12 @@ export class PlanPanel {
         let toolBarButton = $(TAB_TEMPLATE);
         this.mapApi.$compile(toolBarButton);
         $('rv-mapnav .rv-mapnav-content').prepend(toolBarButton);
-
     }
 
     closePanel() {
         this.planPanel.close()
         this.planPanel.destroy()
-
     }
-    
+
 }
   

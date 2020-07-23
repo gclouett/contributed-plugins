@@ -1,7 +1,5 @@
 import { TableLoader } from './table-loader';
-//import { PRINT_TABLE_NOT_ROWS } from './table-template';
 import { TableManager } from './table-manager';
-import { ConfigManager, ColumnConfigManager} from './config-manager';
 import { PROVINCE } from './template';
 
 
@@ -10,7 +8,6 @@ export class MakeQuery {
     private _configLang: any;
 
     private query: any;
-    //private baseURL: any;
     private curProv: any;
     private queryURL: any;
     private queryTask: any;
@@ -83,83 +80,10 @@ export class MakeQuery {
     createTable(panel) {
         return function(queryResults) {  
             const columns = ['Plan Number', 'Description', 'Date of Survey','Plan Detail', 'LTO']
-
-            /*
-            const self = this;
-            let headers = ``;
-            const columns = ['Plan Number', 'Description', 'Date of Survey','Plan Detail', 'LTO']
-
-            columns.forEach(columnName => {
-
-                //let column = this.configManager.columnConfigs[columnName];
-                let column = {
-                    column: {
-                        visible: true
-                    },
-                    width: 100,
-                    sort: '',
-                    searchDisabled: true
-                };
-
-
-                let colDef: ColumnDefinition = {
-                    width: column.width || 100,
-                    minWidth: column.width,
-                    maxWidth: column.width,
-                    //headerName: this.attributeHeaders[columnName] ? this.attributeHeaders[columnName]['name'] : '',
-                    //headerTooltip: this.attributeHeaders[columnName] ? this.attributeHeaders[columnName]['name'] : '',
-                    field: columnName,
-                    //filterParams: <FilterParameters>{},
-                    //filter: 'agTextColumnFilter',
-                    //floatingFilterComponentParams: { suppressFilterButton: true, mapApi: this.mapApi },
-                    //floatingFilterComponent: undefined,
-
-                    cellRenderer: function (cell) {
-                        const translated = $(`<span>{{ 'plugins.enhancedTable.table.complexValue' | translate }}</span>`);
-                        self.mapApi.$compile(translated);
-                        return cell.value || !isNaN(cell.value) ? (typeof cell.value === 'object' ? translated[0] : cell.value) : '';
-                    },
-                    suppressSorting: false,
-                    suppressFilter: column.searchDisabled,
-                    sort: column.sort,
-                    suppressMovable: true,
-                    hide: column.column !== undefined && column.column.visible !== undefined ? !column.column.visible : false
-                };
-
-                if (columnName !== 'SHAPE' && columnName !== ' ' && columnName !== '') {
-                    headers += `<th style='width:200%; padding: 5px; border-bottom: 2px solid #000000'><div class='cell'>${columnName}</div></th>`;
-                };
-                
-            });*/
-
             let a = queryResults.features
             panel.changePanel('TEST', columns, a);
         }
-
     }
-
-    /*openLoading(mapApi, panel) {
-        return function(queryResults) {  
-            let a = queryResults.features
-
-            let legendBlock = {
-                name: "Survey Plan Results",
-                loadedFeatureCount: 1,
-                featureCount: queryResults.features.length,
-                loadingPanel: {},
-                formattedData:''
-            }
-            
-            //let loadingPanel = new TableLoader(mapApi, legendBlock);
-            //panel.changeBody(legendBlock);
-
-            let loadingTimeout = setTimeout(() => {
-                legendBlock.loadingPanel = panel;
-                legendBlock.formattedData;
-            }, 200);
-
-        }; 
-    }; */
 }
 
 export interface MakeQuery {
@@ -172,7 +96,6 @@ export interface MakeQuery {
     changeBody: TableLoader;
     loadingTimeout: any;
     layerAdded: any;
-    configManager: ConfigManager;
     tableManager: TableManager;
 }
 

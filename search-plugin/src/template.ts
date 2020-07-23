@@ -48,6 +48,7 @@ export const SEARCH_PANEL_TEMPLATE = ` 
             <input type="text" ng-model="color" required="" md-maxlength="10" id="planInput">
         </md-input-container>
     </section>
+    
     <section layout="row" layout-sm="column" layout-align="center left" layout-wrap>
         <md-button 
             title="{{ 'plugins.searchPlugin.searchAria' | translate }}"
