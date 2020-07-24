@@ -92,7 +92,7 @@
       "layers": [
         {
           "id": "0",
-          "name": "SurveyPlanQuery  ",
+          "name": "SurveyPlanQuery",
           "layerType": "esriFeature",
           "url": "https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/WMB_Query_AB/MapServer/0"
         }
@@ -242,6 +242,20 @@
               "id": "SMR",
               "layerType": "esriFeature",
               "url": "https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/Simple/MapServer"
+            }
+          ],
+          "tileSchemaId": "EXT_NRCAN_Lambert_3978#LOD_NRCAN_Lambert_3978"
+        },
+        {
+          "id": "testWMBLayers",
+          "name": "SGB Base Map - Simple",
+          "description": "SGB Base Map - Simple",
+          "altText": "altText - SGB base map - Simple",
+          "layers": [
+            {
+              "id": "WMB",
+              "layerType": "esriFeature",
+              "url": "https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/NRCan_SGB_Business_LCC/MapServer"
             }
           ],
           "tileSchemaId": "EXT_NRCAN_Lambert_3978#LOD_NRCAN_Lambert_3978"

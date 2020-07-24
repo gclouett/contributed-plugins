@@ -1,3 +1,5 @@
+import { LEGEND_TEMPLATE } from './template'
+
 export class AddLayer {
     
     public translations: any;
@@ -8,6 +10,8 @@ export class AddLayer {
     private layer: any;
     private infoTemplate: any;
 
+    private testLayer: any;
+
     constructor (mapApi: any, config: any) {
     
         this.mapApi = mapApi;
@@ -16,6 +20,7 @@ export class AddLayer {
         // Load ArcGIS JS API requirements
         let esriBundlePromise = (<any>window).RAMP.GAPI.esriLoadApiClasses([
             ['esri/dijit/PopupTemplate', 'PopupTemplate'],
+            ['esri/dijit/Legend', 'Legend'],
             ["dijit/TooltipDialog", "TooltipDialog"],
             ["dijit/popup", "dijitPopup"], 
             ["dojo/domReady!"],
@@ -29,7 +34,44 @@ export class AddLayer {
 
         esriBundlePromise.then(esriBundle => {
             that.addLayer(esriBundle, mapApi, config);
+            that.addBusinessMap(esriBundle);
+            that.addLegendPanel(mapApi);
+
         });
+    }
+
+    addLegendPanel(mapApi) {
+      const legendPanel = this.mapApi.panels.create('legendDiv');
+      legendPanel.element.css({top: '350px', width: '400px', height: '360px' });
+
+    
+      /*let legend = new esriBundle.Legend({
+          map: this.mapApi.esriMap}, "legendDiv");
+      legend.startup();*/
+
+      this.mapApi.agControllerRegister('LegendPanel', ['$scope', function($scope) {
+        $scope.toggleLayerVisibility = function(a) {
+          let businessMap = mapApi.esriMap
+          businessMap.getLayer('layer4').layerInfos[93].defaultVisibility=false
+        }
+
+
+      }])
+
+      let legendTemplate = $(LEGEND_TEMPLATE);
+      this.mapApi.$compile(legendTemplate);
+      legendPanel.body.empty();
+      legendPanel.body.prepend(legendTemplate);
+      legendPanel.open();
+    }
+
+    addBusinessMap(esriBundle) {
+      const RAMP_GAPI =  (<any>window).RAMP.GAPI.esriBundle
+      const businessURL = 'http://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/NRCan_SGB_Business_LCC/MapServer';
+      let businessLayer = new RAMP_GAPI.ArcGISDynamicMapServiceLayer(businessURL);
+      const visLayers = [1,3,4,6,7,9,10,12,13,15,16,18,19,21,22,24,25,27,28,30,31,33,34,36,37,39,40,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,63,65,66,67,68,69,72,73,74,75,76,78,79,80,81,82,83,84,85,86,91,95,97];
+      businessLayer.setVisibleLayers(visLayers);
+      this.mapApi.esriMap.addLayer(businessLayer);
     }
 
     addLayer(esriBundle, mapApi, config) {

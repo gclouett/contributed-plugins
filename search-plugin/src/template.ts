@@ -48,7 +48,7 @@ export const SEARCH_PANEL_TEMPLATE = ` 
             <input type="text" ng-model="color" required="" md-maxlength="10" id="planInput">
         </md-input-container>
     </section>
-    
+
     <section layout="row" layout-sm="column" layout-align="center left" layout-wrap>
         <md-button 
             title="{{ 'plugins.searchPlugin.searchAria' | translate }}"
@@ -76,6 +76,33 @@ export const GRID_TEMPLATE = `
         <md-icon ng-if="sortAsc" class="rv-sort-arrow" md-svg-icon="navigation:arrow_upward" aria-label="{{ 'plugins.enhancedTable.columnHeader.sortAsc' | translate }}"></md-icon>
 </div>
 `;
+
+export const LEGEND_TEMPLATE = `
+
+	<div class="tabpanels" ng-controller="LegendPanel as ctrl">
+		
+            <div class="tgl-panel" aria-labelledby="wb-auto-2" aria-expanded="true" aria-hidden="false">
+			<div>
+                <form id="legend" action="javascript:void(0)" method="post" class="form-horizontal mrgn-rght-0 mrgn-lft-0">
+	                <h3>Légende</h3>
+		            <details class="row mrgn-lft-0 mrgn-rght-0" open="">
+		            <summary>Pétrole et gaz</summary>
+					<div class="checkbox">
+                        <label for="legend-4">
+                            <input type="checkbox" value="4" id="legend-4" checked="" ng-click="toggleLayerVisibility(97)">
+                            <span>
+                                <img class="image-actual" src="./images/legend-97.png" alt="Rectangle bleu" style="width:auto !important">
+                            </span>
+                            Réseau de pétrole et de gaz
+                        </label>
+                    </div>
+                </form>
+            </div>
+		
+    </div>
+
+`;
+
 
 export const PROVINCE = {
     'fr-CA' :{

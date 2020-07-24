@@ -7,6 +7,7 @@ logger('Loading plugin...');
 export default class SearchPlugin {
 
     private _button: any;
+    private _button2: any;
     private panel: any;
     
     /**
@@ -41,6 +42,10 @@ export default class SearchPlugin {
 
         // set toolbar state
         this._button.isActive = true;
+
+        this._button2 = this.mapApi.mapI.addPluginButton(
+            SearchPlugin.prototype.translations[this._RV.getCurrentLang()].placeHolder2, this.onMenuItemClick()
+        );
 
         //Add layer to page
         let testLayer = new AddLayer(mapApi, this.config);
@@ -78,6 +83,7 @@ export default interface SearchPlugin {
 SearchPlugin.prototype.translations = {
     'en-CA': {
         placeHolder: 'Plan Search test',
+        placeHolder2: 'Map test',
         tableTitle: 'Table Name',
         pluginName: 'Plan Search Service',
         buttonName: 'Search',
@@ -93,6 +99,7 @@ SearchPlugin.prototype.translations = {
     },
     'fr-CA': {
         placeHolder: 'Recherche de plans test',
+        placeHolder2: 'Carte test',
         tableTitle: 'Nom de la table',
         pluginName: 'Recherche de plans',
         buttonName: 'Rechercher',
