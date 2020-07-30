@@ -55,8 +55,10 @@ export class TableLoader {
         
         //this.panel.body.prepend(this.compileTemplate(GRID_TEMPLATE))
         this.panel.body = this.compileTemplate(GRID_TEMPLATE)
-  
+
         let gridDiv = <HTMLElement>document.querySelector('#resultsGrid')
+        let gridDiv2 = <HTMLElement>document.querySelector('#test')
+
 
         let gridOptions = {
             columnDefs: [
@@ -101,6 +103,8 @@ export class TableLoader {
         })
         
         new Grid(gridDiv, gridOptions);
+        new Grid(gridDiv2, gridOptions);
+
     }
 
     compileTemplate(template): JQuery<HTMLElement> {

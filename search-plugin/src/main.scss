@@ -11,6 +11,120 @@ $accent-color: #00bcd4;
 @import 'ag-grid-community/src/styles/ag-theme-material';
 
 
+/* Style the tab */
+.tabButton {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tablinks {
+    //font-size: 15px;
+    text-transform: capitalize;
+    background-color: inherit;
+    padding: 0px 0px;
+    margin: 0px 5px
+    //display: inline-block;
+    /*;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0px 0px;
+    transition: 0.3s;
+    text-transform: capitalize;*/
+}
+
+.tablinks:hover {
+    background-color: #ddd;
+    color: white;
+}
+
+.tablinks:active{
+    background-color: #ccc;
+}
+
+
+  
+  /* Style the buttons inside the tab */
+.tab button1 {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    text-transform: capitalize;
+}
+  
+  /* Change background color of buttons on hover */
+.tab button1:hover {
+    background-color: #ddd;
+    
+}
+  
+  /* Create an active/current tablink class */
+.tab button1.active {
+    background-color: #ccc;
+}
+  
+  /* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+
+#leftBox {
+    float:left;  
+    background:Red; 
+    width:50%; 
+    height:280px;
+}
+#middleBox{ 
+    float:left;  
+    background:Green; 
+    width:25%; 
+}
+
+
+.heroes {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 11em;
+    border-color: rgb(24, 23, 23);
+  }
+  .heroes li {
+    cursor: pointer;
+    position: relative;
+    left: 1em;
+    background-color: #EEE;
+    margin: 0em;
+    padding: 0em 5;
+    height: 1.6em;
+    border-radius: 0px;
+    text-align: left;
+  }
+  .heroes li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }
+  .heroes li.selected {
+    background-color: #0ba0e0;
+    color: white;
+  }
+  .heroes li.selected:hover {
+    background-color: #3c10db;
+    color: white;
+  }
+
+
 .rv-mapnav-search-content {
     margin: 0px!important;
 

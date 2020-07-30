@@ -8,7 +8,6 @@ export class AddLayer {
     private esriBundle: any;
     private _bundle:any;
     private layer: any;
-    private infoTemplate: any;
 
     private testLayer: any;
 
@@ -54,7 +53,6 @@ export class AddLayer {
           let businessMap = mapApi.esriMap
           businessMap.getLayer('layer4').layerInfos[93].defaultVisibility=false
         }
-
 
       }])
 

@@ -87,7 +87,7 @@ SearchPlugin.prototype.translations = {
         tableTitle: 'Table Name',
         pluginName: 'Plan Search Service',
         buttonName: 'Search',
-        inputText: 'Enter Plan Nuber',
+        inputText: 'Enter Plan Number',
         searchAria: 'Search Plan',
         resetLabel: 'Reset search',
         resetButton: 'Reset',
@@ -95,7 +95,16 @@ SearchPlugin.prototype.translations = {
         descriptionTitle: 'Description',
         surveyDateTitle: 'Date of Survey',
         planDetailTitle: 'Plan Detail',
-        bedfTitle: 'LTO'
+        bedfTitle: 'LTO',
+
+        tabs: {
+            parcelTab: 'Parcel',
+            surveyTab: 'Surveys in Progress',
+            planTab: 'Survey Plan',
+            townshipTab: 'Township',
+            adminTab: 'Administrative Area',
+            infoTab: 'Additional Info',
+        }
     },
     'fr-CA': {
         placeHolder: 'Recherche de plans test',
@@ -111,7 +120,15 @@ SearchPlugin.prototype.translations = {
         descriptionTitle: 'Description',
         surveyDateTitle: "Date de l'arpentage",
         planDetailTitle: 'Détail du plan',
-        bedfTitle: 'BEDF'
+        bedfTitle: 'BEDF',
+        tabs: {
+            parcelTab: 'Parcelle',
+            surveyTab: 'Arpentage en cours',
+            planTab: "Plan d'arpentage",
+            townshipTab: 'Township',
+            adminTab: 'Région adminmistrative',
+            infoTab: 'Informations supplémentaires',
+        }
     }
 };
 

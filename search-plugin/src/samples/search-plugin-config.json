@@ -90,12 +90,7 @@
         }
       },
       "layers": [
-        {
-          "id": "0",
-          "name": "SurveyPlanQuery",
-          "layerType": "esriFeature",
-          "url": "https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/WMB_Query_AB/MapServer/0"
-        }
+
       ],
       "extentSets": [
         {

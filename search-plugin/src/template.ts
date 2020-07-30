@@ -36,9 +36,9 @@ export const SEARCH_PANEL_TEMPLATE = ` 
 
         <md-input-container class=md-block-input-province" flex-gt-sm>
             <label>Province</label>
-            <md-select ng-model="user.state" id=selectInput>
-                <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-                    {{state.abbrev}}
+            <md-select ng-model="user.province" id=selectInput>
+                <md-option ng-repeat="province in provinces" value="{{province.canada}}">
+                    {{province.canada}}
                 </md-option>
             </md-select>
         </md-input-container>
@@ -78,9 +78,7 @@ export const GRID_TEMPLATE = `
 `;
 
 export const LEGEND_TEMPLATE = `
-
 	<div class="tabpanels" ng-controller="LegendPanel as ctrl">
-		
             <div class="tgl-panel" aria-labelledby="wb-auto-2" aria-expanded="true" aria-hidden="false">
 			<div>
                 <form id="legend" action="javascript:void(0)" method="post" class="form-horizontal mrgn-rght-0 mrgn-lft-0">
@@ -98,9 +96,158 @@ export const LEGEND_TEMPLATE = `
                     </div>
                 </form>
             </div>
-		
+    </div>
+`;
+
+export const SIDE_NAV_TEMPLATE1 = `
+<div>
+    <ul class="heroes">
+        <li>Aire protégée</li>
+        <li>Arpentage en cours</li>
+        <li>Communauté</li>
+        <li>Coordonées</li>
+        <li>Cri-Naskapi</li>
+        <li>Limite municipale</li>
+        <li>Plan d'arpentage</li>
+        <li>Parc national</li>
+        <li>Parcelle</li>
+        <li>Quadrilatère</li>
+        <li>Réserve indienne</li>
+        <li>Township</li>
+    </ul>
+</div>
+
+<div>
+  <select class="form-control" multiple="multiple" size="12" id="selQueryType">
+    <option value="queryProtectedArea">Aire protégée</option>
+    <option value="querySurveyProject">Arpentage en cours</option>
+    <option value="queryCommunity">Communauté</option>
+    <option value="queryCreeNaskapi">Cri-Naskapi</option>
+    <option value="queryMunicipalBoundary">Limite municipale</option>
+    <option value="querySurveyPlan">Plan d'arpentage</option>
+    <option value="queryNationalPark">Parc national</option>
+    <option value="queryParcel">Parcelle</option>
+    <option value="queryQuad">Quadrilatère</option>
+    <option value="queryIndianReserve">Réserve indienne</option>
+    <option value="queryTownship">Township</option>
+    <option value="queryCoordinate">Coordonnées</option>
+  </select>
+</div>
+
+`;
+
+export const SIDE_NAV_TEMPLATE = `
+
+
+<!--<div ng-controller="AppCtrl" layout="column" class="ng-scope">-->
+<div ng-controller="ResultsTabsCtrl as ctrl" layout="column" class="ng-scope">
+
+    <div class="tabButton">
+        <md-button ng-repeat="control in ctrl.tabs" name="{{ tabs }} 
+            title="{{ control.title | translate }}"
+            class="tablinks"
+            ng-click="openTab(control.name)">
+            {{ control.title | translate }}
+        </md-button>
     </div>
 
+  <div id="parcel" class="tabcontent">
+    <h3>Parcelle</h3>
+    <p>Info sur les parcelles</p>
+  </div>
+
+  <div id="survey" class="tabcontent">
+    <h3>Arpentage en cours</h3>
+    <p>Info sur les arpentages</p> 
+  </div>
+
+  <div id="plan" class="tabcontent">
+    <h3>Plan d'arpentage</h3>
+    <p>Info sur les plans</p>
+  </div>
+
+  <div id="township" class="tabcontent">
+    <h3>Township</h3>
+    <p>Info sur les townships</p>
+  </div>
+
+  <div id="admin" class="tabcontent">
+    <h3>Administrative Area</h3>
+    <p>Info sur les townships</p>
+  </div>
+
+  <div id="info" class="tabcontent">
+    <h3>Informations additionnelles</h3>
+    <p>Info sur les townships</p>
+  </div>
+
+  <section layout="row" flex>
+
+    <md-sidenav class="md-sidenav-left" md-component-id="left2" md-disable-backdrop="" md-whiteframe="4">
+
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Recherches disponibles</h1>
+      </md-toolbar>
+
+      <md-content layout-margin="">
+        <div id = "leftBox">
+          <select class="form-control" multiple="multiple" size="12" id="selQueryType">
+            <option value="queryProtectedArea">Aire protégée</option>
+            <option value="querySurveyProject">Arpentage en cours</option>
+            <option value="queryCommunity">Communauté</option>
+            <option value="queryCreeNaskapi">Cri-Naskapi</option>
+            <option value="queryMunicipalBoundary">Limite municipale</option>
+            <option value="querySurveyPlan">Plan d'arpentage</option>
+            <option value="queryNationalPark">Parc national</option>
+            <option value="queryParcel">Parcelle</option>
+            <option value="queryQuad">Quadrilatère</option>
+            <option value="queryIndianReserve">Réserve indienne</option>
+            <option value="queryTownship">Township</option>
+            <option value="queryCoordinate">Coordonnées</option>
+          </select>
+        </div>
+
+        <div id = "middleBox">
+          <md-input-container class="md-block-input-plan2">
+            <label>{{ 'plugins.searchPlugin.inputText' | translate }} </label>
+            <input type="text" ng-model="color" required="" md-maxlength="10" id="planInput2">
+          </md-input-container>
+
+          <md-button 
+            title="{{ 'plugins.searchPlugin.searchAria' | translate }}"
+            class="bt3 ng-scope md-raised md-primary rv-search-button"
+            aria-label="{{ 'plugins.searchPlugin.searchAria' | translate }}"
+            ng-click="searchFunction()">
+                {{ 'plugins.searchPlugin.buttonName' | translate }}
+          </md-button>
+        </div>
+        
+        <p> This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.</p>
+        <md-button ng-click="toggleLeft()" class="md-accent">Close this Sidenav</md-button>
+      </md-content>
+
+    </md-sidenav>
+
+    <div id='test'>
+    </div>
+
+    <md-content flex layout-padding>
+      <div layout="column" layout-align="top center">
+        <p>
+          Developers can also disable the backdrop of the sidenav.<br/>
+          This will disable the functionality to click outside to close the sidenav.
+        </p>
+
+        <div>
+          <md-button ng-click="toggleLeft()" class="md-raised">Toggle Sidenav</md-button>
+        </div>
+
+      </div>
+    </md-content>
+
+  </section>
+
+</div>
 `;
 
 
