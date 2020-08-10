@@ -6,8 +6,7 @@ logger('Loading plugin...');
 
 export default class SearchPlugin {
 
-    private _button: any;
-    private _button2: any;
+    private button: any;
     private panel: any;
     
     /**
@@ -36,32 +35,28 @@ export default class SearchPlugin {
         this.config.language = this._RV.getCurrentLang();
 
         // how to create side menu button
-        this._button = this.mapApi.mapI.addPluginButton(
+        this.button = this.mapApi.mapI.addPluginButton(
             SearchPlugin.prototype.translations[this._RV.getCurrentLang()].placeHolder, this.onMenuItemClick()
         );
 
         // set toolbar state
-        this._button.isActive = true;
-
-        this._button2 = this.mapApi.mapI.addPluginButton(
-            SearchPlugin.prototype.translations[this._RV.getCurrentLang()].placeHolder2, this.onMenuItemClick()
-        );
+        this.button.isActive = true;
 
         //Add layer to page
         let testLayer = new AddLayer(mapApi, this.config);
         
         this.panel = new PlanPanel(mapApi, this.config.language);
-        this.panel.show()
-        this.panel.setIconBar()
-        //this.panel.panel.closing.subscribe(this.onHideResultPanel.bind(this));
+        //this.panel.createPanel()
+        this.panel.showPanel()
+        //this.panel.closing.subscribe(this.onHideResultPanel.bind(this));
 
     }
     
     //When the plugin button is clicked (left menu)
     onMenuItemClick() {
         return () => {
-            this._button.isActive = !this._button.isActive;
-            this._button.isActive ? this.panel.show() : this.panel.closePanel();
+            this.button.isActive = !this.button.isActive;
+            this.button.isActive ? this.panel.showPanel() : this.panel.closePanel();
             console.log('side menu clicked');
         };
     }
@@ -96,6 +91,8 @@ SearchPlugin.prototype.translations = {
         surveyDateTitle: 'Date of Survey',
         planDetailTitle: 'Plan Detail',
         bedfTitle: 'LTO',
+
+
 
         tabs: {
             parcelTab: 'Parcel',

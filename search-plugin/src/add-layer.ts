@@ -56,11 +56,12 @@ export class AddLayer {
 
       }])
 
-      let legendTemplate = $(LEGEND_TEMPLATE);
+      /*let legendTemplate = $(LEGEND_TEMPLATE);
       this.mapApi.$compile(legendTemplate);
       legendPanel.body.empty();
       legendPanel.body.prepend(legendTemplate);
       legendPanel.open();
+      */
     }
 
     addBusinessMap(esriBundle) {

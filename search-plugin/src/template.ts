@@ -71,15 +71,56 @@ export const SEARCH_PANEL_TEMPLATE = ` 
 `;
 
 export const GRID_TEMPLATE = `
+
 <div class="grid-wrapper">
-    <div id="resultsGrid" style="" class="ag-theme-material">
-        <md-icon ng-if="sortAsc" class="rv-sort-arrow" md-svg-icon="navigation:arrow_upward" aria-label="{{ 'plugins.enhancedTable.columnHeader.sortAsc' | translate }}"></md-icon>
+    <div ng-controller="ResultsTabsCtrl as ctrl" layout="column" class="ng-scope">
+    
+        <md-toolbar class="md-accent">
+            <div class="tabButton">
+                <md-button ng-repeat="control in ctrl.tabs" 
+                    name="{{ control.name }}"
+                    title="{{ control.title | translate }}"
+                    class="tablinks"
+                    ng-click="openTab(control.name)">
+                    {{ control.title | translate }} 
+                
+                </md-button>
+            </div>
+
+            <div id="survey" class="tabcontent">
+                <h3>Arpentage en cours</h3>
+                <p>Info sur les arpentages</p> 
+            </div>
+
+            <div id="plan1" class="tabcontent">
+                <h3>Plan d'arpentage</h3>
+                <p>Info sur les plans</p>
+            </div>
+
+            <div id="township" class="tabcontent">
+                <h3>Township</h3>
+                <p>Info sur les townships</p>
+            </div>
+
+            <div id="admin" class="tabcontent">
+                <h3>Administrative Area</h3>
+                <p>Info sur les townships</p>
+            </div>
+
+            <div id="info" class="tabcontent">
+                <h3>Informations additionnelles</h3>
+                <p>Info sur les townships</p>
+            </div>
+        </md-toolbar>
+    </div>
+    <div id="plan" style="" class="ag-theme-material">
 </div>
+
 `;
 
 export const LEGEND_TEMPLATE = `
 	<div class="tabpanels" ng-controller="LegendPanel as ctrl">
-            <div class="tgl-panel" aria-labelledby="wb-auto-2" aria-expanded="true" aria-hidden="false">
+        <div class="tgl-panel" aria-labelledby="wb-auto-2" aria-expanded="true" aria-hidden="false">
 			<div>
                 <form id="legend" action="javascript:void(0)" method="post" class="form-horizontal mrgn-rght-0 mrgn-lft-0">
 	                <h3>Légende</h3>
@@ -96,6 +137,7 @@ export const LEGEND_TEMPLATE = `
                     </div>
                 </form>
             </div>
+        </div>
     </div>
 `;
 
@@ -136,10 +178,8 @@ export const SIDE_NAV_TEMPLATE1 = `
 
 `;
 
-export const SIDE_NAV_TEMPLATE = `
+export const TABS_TEMPLATE = `
 
-
-<!--<div ng-controller="AppCtrl" layout="column" class="ng-scope">-->
 <div ng-controller="ResultsTabsCtrl as ctrl" layout="column" class="ng-scope">
 
     <div class="tabButton">
@@ -151,36 +191,44 @@ export const SIDE_NAV_TEMPLATE = `
         </md-button>
     </div>
 
-  <div id="parcel" class="tabcontent">
-    <h3>Parcelle</h3>
-    <p>Info sur les parcelles</p>
-  </div>
+    <div id="parcel" class="tabcontent">
+        <h3>Parcelle</h3>
+        <p>Info sur les parcelles</p>
+    </div>
 
-  <div id="survey" class="tabcontent">
-    <h3>Arpentage en cours</h3>
-    <p>Info sur les arpentages</p> 
-  </div>
+      <div id="survey" class="tabcontent">
+        <h3>Arpentage en cours</h3>
+        <p>Info sur les arpentages</p> 
+     </div>
 
-  <div id="plan" class="tabcontent">
-    <h3>Plan d'arpentage</h3>
-    <p>Info sur les plans</p>
-  </div>
+    <div id="plan" class="tabcontent">
+        <h3>Plan d'arpentage</h3>
+        <p>Info sur les plans</p>
+    </div>
 
-  <div id="township" class="tabcontent">
-    <h3>Township</h3>
-    <p>Info sur les townships</p>
-  </div>
+    <div id="township" class="tabcontent">
+        <h3>Township</h3>
+        <p>Info sur les townships</p>
+    </div>
 
-  <div id="admin" class="tabcontent">
-    <h3>Administrative Area</h3>
-    <p>Info sur les townships</p>
-  </div>
+    <div id="admin" class="tabcontent">
+        <h3>Administrative Area</h3>
+        <p>Info sur les townships</p>
+    </div>
 
-  <div id="info" class="tabcontent">
-    <h3>Informations additionnelles</h3>
-    <p>Info sur les townships</p>
-  </div>
+    <div id="info" class="tabcontent">
+        <h3>Informations additionnelles</h3>
+        <p>Info sur les townships</p>
+    </div>
 
+    <section layout="row" flex></section>
+
+</div>
+`;
+
+export const SIDE_NAV_TEMPLATE = `
+
+<div ng-controller="ResultsTabsCtrl as ctrl" layout="column" class="ng-scope">
   <section layout="row" flex>
 
     <md-sidenav class="md-sidenav-left" md-component-id="left2" md-disable-backdrop="" md-whiteframe="4">

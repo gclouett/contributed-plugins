@@ -10,23 +10,23 @@ $accent-color: #00bcd4;
 @import 'ag-grid-community/dist/styles/ag-grid';
 @import 'ag-grid-community/src/styles/ag-theme-material';
 
-
 /* Style the tab */
 .tabButton {
-    overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
+    //position:fixed;
+    overflow: hidden;
+    width: 100%;
 }
 
 .tablinks {
     //font-size: 15px;
-    text-transform: capitalize;
+    text-transform: inherit;
     background-color: inherit;
-    padding: 0px 0px;
-    margin: 0px 5px
+    //padding: 0px 0px;
+    //margin: 0px 5px;
     //display: inline-block;
-    /*;
-    float: left;
+    /*float: left;
     border: none;
     outline: none;
     cursor: pointer;
@@ -41,10 +41,12 @@ $accent-color: #00bcd4;
 }
 
 .tablinks:active{
-    background-color: #ccc;
+    background: rgb(224, 21, 21);
 }
 
-
+.tablinks:focus{
+    background: olive;
+}
   
   /* Style the buttons inside the tab */
 .tab button1 {
@@ -90,7 +92,6 @@ $accent-color: #00bcd4;
     background:Green; 
     width:25%; 
 }
-
 
 .heroes {
     margin: 0 0 2em 0;
@@ -184,42 +185,10 @@ $accent-color: #00bcd4;
     }
 }
 
-.groupX {
-    font-size: 16px;
-    margin: 20px 0;
-    padding: 3px 15px 3px 15px;
-    color: rgb(49, 46, 46);
-    background-color: rgba(224, 224, 224, 0.96);
-    text-transform: none;
-    font-weight: 400;
-    min-width:100px;
-}
-
-.md-button.left {
-    border-radius: 10px 0 0 10px;
-}
-
-.md-button.middle {
-    border-radius: 0;
-    border-left: 1px solid rgba(230, 230, 230, 0.96);
-    border-right: 1px solid rgba(230, 230, 230, 0.96);
-}
-
-.md-button.right {
-    border-radius: 0 10px 10px 0;
-}
-
-.md-button:not([disabled]):hover {
-    background-color: rgba(193, 193, 193, 0.96);
-    color: rgba(44, 65, 164, 0.96);
-    transition: 0.3s;
-}
-
-#resultsGrid {
+#plan {
     flex: 1 1 auto;
     width: 100%;
     right: 52px
-    
 }
 
 .grid-wrapper {
@@ -227,6 +196,7 @@ $accent-color: #00bcd4;
     flex-direction: column;
     height: 100%;
     right: 52px;
+
 }
 
 
