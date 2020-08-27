@@ -9,6 +9,14 @@ $accent-color: #00bcd4;
 // Import the ag-grid styles and ag-grid material theme
 @import 'ag-grid-community/dist/styles/ag-grid';
 @import 'ag-grid-community/src/styles/ag-theme-material';
+@import 'ag-grid-community/src/styles/ag-theme-blue';
+
+.theme-blue {
+    background-color: #00e5ff5e;
+    color: rgba(0, 0, 0, 0.87);
+    font: 400 13px "Roboto", sans-serif;
+}
+
 
 /* Style the tab */
 .tabButton {
@@ -80,50 +88,71 @@ $accent-color: #00bcd4;
     border-top: none;
 }
 
+.tabcontent2 {
+    float: left;
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    margin: 0px 0px 10px 20px;
+}
+
+
+
+.md-sidenav-plugin, 
+.md-sidenav-plugin.md-locked-open, 
+.md-sidenav-plugin.md-closed.md-locked-open-add-active {
+    min-width: 200px !important;
+    width: 85vw !important;
+    max-width: 800px !important;
+} 
+
 
 #leftBox {
     float:left;  
-    background:Red; 
-    width:50%; 
-    height:280px;
-}
-#middleBox{ 
-    float:left;  
-    background:Green; 
-    width:25%; 
-}
-
-.heroes {
+    background: white; 
+    width:180px; 
+    height:300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+  .md-list-item-text {
     margin: 0 0 2em 0;
     list-style-type: none;
     padding: 0;
     width: 11em;
     border-color: rgb(24, 23, 23);
   }
-  .heroes li {
+  .md-list-item-text span {
     cursor: pointer;
     position: relative;
     left: 1em;
-    background-color: #EEE;
+    background-color: rgb(255, 255, 255);
     margin: 0em;
     padding: 0em 5;
-    height: 1.6em;
+    height: 1.4em;
     border-radius: 0px;
     text-align: left;
   }
-  .heroes li:hover {
+  .md-list-item-text span:hover {
     color: #607D8B;
     background-color: #DDD;
-    left: .1em;
+    //left: .1em;
   }
-  .heroes li.selected {
+  .md-list-item-text span.selected {
     background-color: #0ba0e0;
     color: white;
   }
-  .heroes li.selected:hover {
+  .md-list-item-text span.selected:hover {
     background-color: #3c10db;
     color: white;
   }
+}
+//#middleBox{ 
+//    float:left;  
+//    background:Green; 
+//    width:25%; 
+//}
+
 
 
 .rv-mapnav-search-content {

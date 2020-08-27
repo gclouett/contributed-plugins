@@ -75,7 +75,7 @@ export class AddLayer {
 
     addLayer(esriBundle, mapApi, config) {
         const RAMP_GAPI =  (<any>window).RAMP.GAPI.esriBundle
-        const LAYER_URL = 'https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/WMB_Query_AB/MapServer/3'
+        const LAYER_URL = 'https://proxyinternet.nrcan.gc.ca/arcgis/rest/services/MB-NC/WMB_Query_SK/MapServer/3'
 
         this._bundle  = esriBundle;
 

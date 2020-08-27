@@ -174,6 +174,22 @@ export const SIDE_NAV_TEMPLATE1 = `
     <option value="queryTownship">Township</option>
     <option value="queryCoordinate">Coordonnées</option>
   </select>
+
+  <select class="form-control" multiple="multiple" size="12" id="selQueryType">
+            <option value="queryProtectedArea">Aire protégée</option>
+            <option value="querySurveyProject">Arpentage en cours</option>
+            <option value="queryCommunity">Communauté</option>
+            <option value="queryCreeNaskapi">Cri-Naskapi</option>
+            <option value="queryMunicipalBoundary">Limite municipale</option>
+            <option value="querySurveyPlan">Plan d'arpentage</option>
+            <option value="queryNationalPark">Parc national</option>
+            <option value="queryParcel">Parcelle</option>
+            <option value="queryQuad">Quadrilatère</option>
+            <option value="queryIndianReserve">Réserve indienne</option>
+            <option value="queryTownship">Township</option>
+            <option value="queryCoordinate">Coordonnées</option>
+    </select>
+
 </div>
 
 `;
@@ -226,58 +242,139 @@ export const TABS_TEMPLATE = `
 </div>
 `;
 
+export const TOWNSHIP_SEARCH = ` 
+<section layout="column" layout-sm="column" layout-align="center left" layout-wrap>
+    <md-input-container class="md-block-input-section" flex-gt-sm>
+        <label>{{ 'plugins.searchPlugin.inputSection' | translate }}</label>
+        <input type="text" ng-model="color" required="" md-maxlength="10" id="sectionInput">
+    </md-input-container>
+    <md-input-container class="md-block-input-township" flex-gt-sm>
+        <label>{{ 'plugins.searchPlugin.inputTownship' | translate }}</label>
+        <input type="text" ng-model="color" required="" md-maxlength="10" id="townshipInput">
+    </md-input-container>
+    <md-input-container class="md-block-input-range" flex-gt-sm>
+        <label>{{ 'plugins.searchPlugin.inputRange' | translate }}</label>
+        <input type="text" ng-model="color" required="" md-maxlength="10" id="rangeInput">
+    </md-input-container>
+    <md-input-container class=md-block-input-direction" flex-gt-sm>
+        <label>Direction</label>
+        <md-select ng-model="user.direction" id=selectDirection>
+            <md-option ng-repeat="direction in directions" value="{{direction.township}}">{{direction.township}}</md-option>
+        </md-select>
+    </md-input-container>
+    <md-input-container class="md-block-input-meridian" flex-gt-sm>
+        <label>{{ 'plugins.searchPlugin.inputMeridian' | translate }}</label>
+        <input type="text" ng-model="color" required="" md-maxlength="10" id="meridianInput">
+    </md-input-container>
+</section>
+
+<section layout="row" layout-sm="column" layout-align="center left" layout-wrap>
+    <md-button 
+        title="{{ 'plugins.searchPlugin.searchAria' | translate }}"
+        class="bt1 ng-scope md-raised md-primary rv-search-button"
+        aria-label="{{ 'plugins.searchPlugin.searchAria' | translate }}"
+        ng-click="searchFunction()">
+        {{ 'plugins.searchPlugin.buttonName' | translate }}
+    </md-button>
+            
+    <md-button 
+        title="{{ 'plugins.searchPlugin.resetLabel' | translate }}"
+        class="bt2 ng-scope md-raised md-primary rv-reset-button"
+        ng-click="resetFunction()">
+        {{ 'plugins.searchPlugin.resetButton' | translate }}
+    </md-button>
+</section>
+`
+
+export const PLAN_SEARCH = ` 
+<section layout="column" layout-sm="column" layout-align="center left" layout-wrap>
+
+    <md-input-container class=md-block-input-province" flex-gt-sm>
+        <label>Province</label>
+        <md-select ng-model="user.province" id=selectInput1>
+            <md-option ng-repeat="province in provinces" value="{{province.canada}}">{{province.canada}}</md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container class="md-block-input-land" flex-gt-sm>
+        <label>{{ 'plugins.searchPlugin.canadaLand' | translate }}</label>
+        <md-select ng-model="user.province" id=selectInput>
+            <md-option ng-repeat="province in provinces" value="{{province.canada}}">{{province.canada}}</md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container class="md-block-input-plan" flex-gt-sm>
+        <label>{{ 'plugins.searchPlugin.inputText' | translate }}</label>
+        <input type="text" ng-model="color" required="" md-maxlength="10" id="planInput1">
+    </md-input-container>
+</section>
+
+<section layout="row" layout-sm="column" layout-align="center left" layout-wrap>
+    <md-button 
+        title="{{ 'plugins.searchPlugin.searchAria' | translate }}"
+        class="bt1 ng-scope md-raised md-primary rv-search-button"
+        aria-label="{{ 'plugins.searchPlugin.searchAria' | translate }}"
+        ng-click="searchFunction()">
+        {{ 'plugins.searchPlugin.buttonName' | translate }}
+    </md-button>
+            
+    <md-button 
+        title="{{ 'plugins.searchPlugin.resetLabel' | translate }}"
+        class="bt2 ng-scope md-raised md-primary rv-reset-button"
+        ng-click="resetFunction()">
+        {{ 'plugins.searchPlugin.resetButton' | translate }}
+    </md-button>
+</section>
+`
+
 export const SIDE_NAV_TEMPLATE = `
 
-<div ng-controller="ResultsTabsCtrl as ctrl" layout="column" class="ng-scope">
-  <section layout="row" flex>
+<div ng-controller="SelectTabMenu as ctrl" layout="column" class="ng-scope">
 
-    <md-sidenav class="md-sidenav-left" md-component-id="left2" md-disable-backdrop="" md-whiteframe="4">
+    <md-sidenav class="md-sidenav-plugin" md-component-id="leftPanel" md-disable-backdrop="" md-whiteframe="4">
 
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">Recherches disponibles</h1>
+      <md-toolbar class="theme-blue">
+        <h1 class="md-toolbar-tools"> Available Searches</h1>
       </md-toolbar>
-
+ 
       <md-content layout-margin="">
-        <div id = "leftBox">
-          <select class="form-control" multiple="multiple" size="12" id="selQueryType">
-            <option value="queryProtectedArea">Aire protégée</option>
-            <option value="querySurveyProject">Arpentage en cours</option>
-            <option value="queryCommunity">Communauté</option>
-            <option value="queryCreeNaskapi">Cri-Naskapi</option>
-            <option value="queryMunicipalBoundary">Limite municipale</option>
-            <option value="querySurveyPlan">Plan d'arpentage</option>
-            <option value="queryNationalPark">Parc national</option>
-            <option value="queryParcel">Parcelle</option>
-            <option value="queryQuad">Quadrilatère</option>
-            <option value="queryIndianReserve">Réserve indienne</option>
-            <option value="queryTownship">Township</option>
-            <option value="queryCoordinate">Coordonnées</option>
-          </select>
+        <h3>1. Select Available Searches</h3>
+        <md-list-item class="form-group" id="leftBox">
+          <div class="md-list-item-text" layout="column">
+            <span ng-click="getSearchInfo('middleBox')">­­­­{{ 'plugins.searchPlugin.sidePanel.protected' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.community' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.coords' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.creena' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.municipal' | translate }}</span>
+            <span ng-click="getSearchInfo(subdivisionSearch)">­­­­{{ 'plugins.searchPlugin.sidePanel.subdivision' | translate }}</span>
+            <span ng-click="getSearchInfo('planSearch')">­­­­{{ 'plugins.searchPlugin.sidePanel.plan' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.park' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.parcel' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.quads' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.reserve' | translate }}</span>
+            <span ng-click="getSearchInfo('townshipSearch')">­­­­{{ 'plugins.searchPlugin.sidePanel.township' | translate }}</span>
+            <span ng-click="getSearchInfo()">­­­­{{ 'plugins.searchPlugin.sidePanel.survey' | translate }}</span>
+          </div>
+        </md-list-item>
+
+        <div id="subdivisionSearch" class="tabcontent2">
+          <h3>Survey Plan</h3>
+          ${TOWNSHIP_SEARCH}
         </div>
 
-        <div id = "middleBox">
-          <md-input-container class="md-block-input-plan2">
-            <label>{{ 'plugins.searchPlugin.inputText' | translate }} </label>
-            <input type="text" ng-model="color" required="" md-maxlength="10" id="planInput2">
-          </md-input-container>
-
-          <md-button 
-            title="{{ 'plugins.searchPlugin.searchAria' | translate }}"
-            class="bt3 ng-scope md-raised md-primary rv-search-button"
-            aria-label="{{ 'plugins.searchPlugin.searchAria' | translate }}"
-            ng-click="searchFunction()">
-                {{ 'plugins.searchPlugin.buttonName' | translate }}
-          </md-button>
+        <div *ngIf = "show" id="planSearch" class="tabcontent2">
+          <h3>Survey Plan</h3>
+          ${PLAN_SEARCH}
         </div>
-        
-        <p> This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.</p>
+
+        <div id="townshipSearch" class="tabcontent2">
+          <h3>Survey Plan</h3>
+          ${TOWNSHIP_SEARCH}
+        </div>
+
         <md-button ng-click="toggleLeft()" class="md-accent">Close this Sidenav</md-button>
       </md-content>
-
     </md-sidenav>
-
-    <div id='test'>
-    </div>
 
     <md-content flex layout-padding>
       <div layout="column" layout-align="top center">
@@ -292,8 +389,6 @@ export const SIDE_NAV_TEMPLATE = `
 
       </div>
     </md-content>
-
-  </section>
 
 </div>
 `;

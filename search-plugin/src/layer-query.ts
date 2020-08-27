@@ -80,7 +80,7 @@ export class MakeQuery {
     createTable(panel) {
         return function(queryResults) {
             const columns = ['Plan Number', 'Description', 'Date of Survey','Plan Detail', 'LTO']
-            panel.setResultsGrid( queryResults.features);
+            panel.setResultsGrid(queryResults.features);
         }
     }
 }

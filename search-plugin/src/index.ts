@@ -46,7 +46,6 @@ export default class SearchPlugin {
         let testLayer = new AddLayer(mapApi, this.config);
         
         this.panel = new PlanPanel(mapApi, this.config.language);
-        //this.panel.createPanel()
         this.panel.showPanel()
         //this.panel.closing.subscribe(this.onHideResultPanel.bind(this));
 
@@ -83,6 +82,7 @@ SearchPlugin.prototype.translations = {
         pluginName: 'Plan Search Service',
         buttonName: 'Search',
         inputText: 'Enter Plan Number',
+        canadaLand: 'Canada Land',
         searchAria: 'Search Plan',
         resetLabel: 'Reset search',
         resetButton: 'Reset',
@@ -92,7 +92,21 @@ SearchPlugin.prototype.translations = {
         planDetailTitle: 'Plan Detail',
         bedfTitle: 'LTO',
 
-
+        sidePanel: {
+            protected: 'Protected Area',
+            survey: 'Surveys in Progress',
+            community: 'Community',
+            coords: 'Coordinates',
+            creena: 'Cree-Naskapi', 
+            municipal: 'Municipal Boundary',
+            subdivision: 'Subdivision',
+            plan: 'Survey Plan',
+            park: 'National Park',
+            parcel: 'Parcel',
+            quads: 'Quad',
+            reserve: 'Indian Reserve',
+            township: 'Township',
+        },
 
         tabs: {
             parcelTab: 'Parcel',
@@ -110,6 +124,7 @@ SearchPlugin.prototype.translations = {
         pluginName: 'Recherche de plans',
         buttonName: 'Rechercher',
         inputText: 'Numéro de plan',
+        canadaLand: 'Terre du Canada',
         searchAria: 'Chercher un plan',
         resetLabel: 'Réinitialiser la recherche',
         resetButton: 'Réinitialiser',
@@ -118,6 +133,22 @@ SearchPlugin.prototype.translations = {
         surveyDateTitle: "Date de l'arpentage",
         planDetailTitle: 'Détail du plan',
         bedfTitle: 'BEDF',
+
+        sidePanel: {
+            protected: 'Aire protégée',
+            survey: 'Arpentage en cours',
+            community: 'Communauté',
+            coords: 'Coordonnées',
+            creena: 'Cri-Naskapi', 
+            municipal: 'Limite municipale',
+            subdivision: 'Lotissement',
+            plan: "Plan d'arpentage",
+            park: 'Parc national',
+            parcel: 'Parcelle',
+            quads: 'Quadrilatère',
+            reserve: 'Réserve indienne',
+            township: 'Township',
+        },
         tabs: {
             parcelTab: 'Parcelle',
             surveyTab: 'Arpentage en cours',

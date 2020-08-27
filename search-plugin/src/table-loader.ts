@@ -37,7 +37,6 @@ export class TableLoader {
 
                 if (tabContentActive.length >0) {
                     tabContentActive[0].style.display = "none";
-
                     tabContentActive[0].classList.remove("active")
                 }
 
@@ -47,7 +46,15 @@ export class TableLoader {
         });
 
         this.panel.header.append(customBtn2);
+
+        
         this.panel.header.closeButton;
+
+        this.mapApi.ui.configLegend.elementRemoved.subscribe(legendBlock => {
+            if (legendBlock === this.panel.legendBlock) {
+                this.panel.panel.close();
+            }
+        });
     }
 
     open() {
@@ -102,8 +109,6 @@ export class TableLoader {
 
         }
         
-        
-
         results.forEach(function(result) {
             let date = result.attributes['P3_DATESURVEYED'];
             let year = date.substr(0,4);

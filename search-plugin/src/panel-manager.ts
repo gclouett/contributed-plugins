@@ -1,9 +1,9 @@
-import { SEARCH_PANEL_TEMPLATE, TAB_TEMPLATE, PROVINCE, SIDE_NAV_TEMPLATE } from './template';
+import { SEARCH_PANEL_TEMPLATE, TAB_TEMPLATE, PROVINCE, SIDE_NAV_TEMPLATE, PLAN_SEARCH } from './template';
 import { MakeQuery } from './layer-query';
 
 const Draggabilly = require('draggabilly');
 const PANEL_OPTIONS_CSS = {top: '50%', left: '20%', right: '52px',}
-const SIDEPANEL_OPTIONS_CSS = {top: '10%', left: '20%', width: '410px', height: '360px',};
+const SIDEPANEL_OPTIONS_CSS = {top: '10%', left: '20%',  right: '52px', height: '360px',};
 
 export class PlanPanel {
 
@@ -17,7 +17,6 @@ export class PlanPanel {
         this.createPanel(this.mapApi, this.configLang)
     }
 
-    //createPanel(mapApi = this.mapApi, configLang = this.configLang) {
     createPanel(mapApi, configLang) {
 
         const planPanel = this.mapApi.panels.create('searchPlanPanel');
@@ -42,6 +41,31 @@ export class PlanPanel {
         const draggable = new Draggabilly(planPanel.element.get(0), {handle: '.rv-header'});
 
         this.planPanel = planPanel
+
+        this.mapApi.agControllerRegister('SelectTabMenu', ['$scope', '$mdSidenav', function($scope, $mdSidenav) {
+            $scope.toggleLeft = buildToggler('leftPanel');
+
+            function buildToggler(componentId) {
+              return function() {
+                $mdSidenav(componentId).toggle();
+              }
+            }
+
+            $scope.getSearchInfo = function(tabName) {
+                
+                let tabContent = <HTMLElement>document.getElementById(tabName);
+                let tabContentActive = document.getElementsByClassName(' active') as HTMLCollectionOf<HTMLElement>
+
+                if (tabContentActive.length >0) {
+                    tabContentActive[0].style.display = "none";
+                    tabContentActive[0].classList.remove("active")
+                }
+
+                tabContent.className += ' active';
+                tabContent.style.display = "block";
+            }
+            
+        }])
 
         this.mapApi.agControllerRegister('SearchPanel', ['$scope', function($scope) {
             $scope.searchFunction = function() {
@@ -74,7 +98,7 @@ export class PlanPanel {
         }]);
 
         this.mapApi.agControllerRegister('ResultsTabsCtrl', ['$scope','$mdSidenav', function($scope, $mdSidenav) {
-
+        
             this.tabs = {
                 parcel: {
                     name: 'parcel',
@@ -102,6 +126,9 @@ export class PlanPanel {
                 }
             };
 
+            this.sideTab = {}
+
+
             $scope.openTab = function(tabName) {
 
                 let tabContent = <HTMLElement>document.getElementById(tabName);
@@ -109,21 +136,33 @@ export class PlanPanel {
 
                 if (tabContentActive.length >0) {
                     tabContentActive[0].style.display = "none";
-
                     tabContentActive[0].classList.remove("active")
                 }
 
                 tabContent.className += ' active';
                 tabContent.style.display = "block";
-
             }
 
-            $scope.toggleLeft = buildToggler('left2');
+            $scope.toggleLeft = buildToggler('leftPanel');
 
             function buildToggler(componentId) {
               return function() {
                 $mdSidenav(componentId).toggle();
               }
+            }
+
+            $scope.getSearchInfo = function(tabName) {
+                console.log('a')
+                let tabContent = <HTMLElement>document.getElementById(tabName);
+                let tabContentActive = document.getElementsByClassName(' active') as HTMLCollectionOf<HTMLElement>
+
+                if (tabContentActive.length >0) {
+                    tabContentActive[0].style.display = "none";
+                    tabContentActive[0].classList.remove("active")
+                }
+
+                tabContent.className += ' active';
+                tabContent.style.display = "block";
             }
         }])
 
@@ -138,16 +177,6 @@ export class PlanPanel {
         sidePanel.body.prepend(sideTemplate);
         sidePanel.open();
     }
-
-    /*setIconBar() {
-        this.mapApi.agControllerRegister('DownloadBtnCtrl', ['$scope', function($scope) {
-            $scope.downloadResultsAsJson = 'test';
-        }])
-        
-        let toolBarButton = $(TAB_TEMPLATE);
-        this.mapApi.$compile(toolBarButton);
-        $('rv-mapnav .rv-mapnav-content').prepend(toolBarButton);
-    }*/
 
     showPanel() {
         this.planPanel.open()
