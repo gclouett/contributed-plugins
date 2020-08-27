@@ -1,0 +1,30 @@
+export declare class QueryTest {
+    translations: any;
+    private mapApi;
+    private config;
+    private esriBundle;
+    private _bundle;
+    private identifyMode;
+    private symbols;
+    private esriDrawToolbar;
+    private esriEditToolbar;
+    private $toolbar;
+    private controls;
+    private selectedTool;
+    private isEditing;
+    private resultPanel;
+    private layer;
+    private query;
+    private _element;
+    private baseURL;
+    private curProv;
+    private queryURL;
+    private queryTask;
+    private queryName;
+    private whereclause;
+    private firstnation;
+    private queryString;
+    private testLayer;
+    constructor(mapApi: any, config: any);
+    queryAdminArea(layerno: any): void;
+}
